@@ -1,0 +1,38 @@
+server:
+  servlet:
+    context-path: /eureka01
+  port: 8080
+
+spring:
+  application:
+    name: eureka
+
+eureka:
+  instance:
+    prefer-ip-address: true #是否使用ip而不是hostname注册
+    instance-id: eureka01
+  client:
+    #是否向注册中心注册自己,如果不使用defaultZone就必须使用注册参数和检索参数作为高可用配置
+    register-with-eureka: true
+    #检索服务，eureka的职责是维护服务
+    fetch-registry: true
+    #是否偏好使用处于相同zone的服务提供者
+    prefer-same-zone-eureka: true
+    # 可以理解成地区
+    region: guangzhou
+    #可以理解成可用的机房
+    availability-zones:
+      #region和zone的对应关系
+      guangzhou: zone-1,zone-2
+    service-url:
+      #eureka server对外暴露的服务注册和服务发现地址
+      #defaultZone就是一个可用区域
+      #defaultZone: http://localhost:8080/eureka01/eureka/,http://localhost:8081/eureka02/eureka/
+      # 分机房
+      zone-1: http://localhost:8080/eureka01/eureka/
+      zone-2: http://localhost:8081/eureka02/eureka/
+  server:
+    #是否开启自我保护机制，默认开启
+    enable-self-preservation: true
+
+
